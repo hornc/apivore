@@ -11,6 +11,9 @@ module Apivore
       else
         raise "Unknown/unsupported Swagger version to validate against: #{version}"
       end
+      draft04 = JSON.parse(File.read(File.expand_path("../../data/draft04_schema.json", __FILE__)))
+      draft04_schema = JSON::Schema.new(draft04, Addressable::URI.parse('http://json-schema.org/draft-04/schema#'))
+      JSON::Validator.add_schema(draft04_schema)
       JSON::Validator.fully_validate(schema, self)
     end
 

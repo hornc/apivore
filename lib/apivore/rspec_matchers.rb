@@ -67,6 +67,9 @@ module Apivore
     matcher :conform_to_the_documented_model_for do |swagger, fragment|
       match do |body|
         body = JSON.parse(body)
+        draft04 = JSON.parse(File.read(File.expand_path("../../../data/draft04_schema.json", __FILE__)))
+        draft04_schema = JSON::Schema.new(draft04, Addressable::URI.parse('http://json-schema.org/draft-04/schema'))
+        JSON::Validator.add_schema(draft04_schema)
         @errors = JSON::Validator.fully_validate(swagger, body, fragment: fragment)
         @errors.empty?
       end
