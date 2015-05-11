@@ -123,7 +123,8 @@ module Apivore
     end
 
     def description
-      "validate that #{method} #{path} returns #{expected_response_code}"
+      description = "validate that #{method} #{path} returns #{expected_response_code}"
+      description += " and conforms to the specified schema" unless response.body.blank?
     end
 
     # Required by ActionDispatch::Integration::Runner
