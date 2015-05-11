@@ -7,6 +7,8 @@ module Apivore
         methods.each do |method, codes|
           codes.each do |code, _|
             @errors << "#{method} #{path} is untested for response code #{code}"
+            @errors << "  Add a test for it using:
+    it { is_expected.to validate( :#{method}, '#{path}', #{code}, params ) }"
           end
         end
       end
